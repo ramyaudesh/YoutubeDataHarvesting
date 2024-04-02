@@ -19,18 +19,9 @@ def channel_api_call(channelId):
             part="snippet,contentDetails,statistics",id=channelId
         )
         channelResponse = request.execute()
-        #st.write(channelResponse)
+        st.write(channelResponse)
         ChannelData(channelResponse)
-        
-        
-"""def UploadChannelData():
-       
-    my_db = create_connection("localhost","ramya","root123","youtubeharvesting")
-    
-    df = pd.DataFrame(ChannelDataList)
-    df.to_sql('channel', con=my_db, if_exists='append', index=False)"""
-    
-        
+         
 def videos_api_call(videoId):
         request = youtube.videos().list(
             part="snippet,contentDetails,statistics",id=videoId

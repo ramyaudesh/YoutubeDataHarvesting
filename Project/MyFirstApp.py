@@ -4,7 +4,6 @@ from streamlit_option_menu import option_menu
 from YoutubeApiCall import*
 import googleapiclient.errors
 from Dataframe import *
-
 # 1. as sidebar
 with st.sidebar:
     selectionMenu = option_menu(
@@ -24,7 +23,7 @@ if selectionMenu == "Channels":
     # st.button(label='Extract Data', on_click=playlist_api_call(IdInput))
     # st.button(label='Extract Data', on_click=comments_api_call(IdInput))
 
-    st.button(label='Upload to MySql', on_click=UploadChannelData(StoredChannelData))
+    # st.button(label='Upload to MySql',on_click=UploadChannelData(requiredChannelDetails))
     
 
 else:
