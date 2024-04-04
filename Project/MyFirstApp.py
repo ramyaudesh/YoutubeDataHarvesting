@@ -39,5 +39,11 @@ else:
             'What are the names of all the channels that have published videos in the yea 2022?',
             'What is the average duration of all videos in each channel, and what are their corresponding channel names?',
             'Which videos have the highest number of comments, and what are their corresponding channel names?'])
+    tab1, tab2 = st.tabs(['Data', 'Charts'])
+    with tab1:
+        st.header("DataTable")
+    with tab2:
+        st.header("DataAnalysisChart")
+    
 
 
