@@ -17,7 +17,7 @@ with st.sidebar:
 
 if selectionMenu == "Channels":
     st.title("YouTube Channels Harvesting")
-    channelId= st.text_input("Enter Data")
+    channelId= st.text_input("Enter Channel ID Below")
     st.button(label='Extract Data', on_click=extractData(channelId))
 
 else:
