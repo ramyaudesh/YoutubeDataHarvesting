@@ -48,7 +48,7 @@ else:
         query = "SELECT video.VideoName, channel.ChannelName FROM video INNER JOIN channel ON video.ChannelID =channel.ChannelID;"
         result = querySqlTables(query) 
     elif question == 'Which channels have the most number of videos, and how many videos do they have?':
-        query = "select * from channel"
+        query = "select count(VideoID), channel.ChannelName from video INNER JOIN channel ON video.ChannelID=channel.ChannelID group by ChannelName order by count(VideoID) DESC;"
         result = querySqlTables(query) 
     elif question == 'What are the top 10 most viewed videos and their respective channels?':
         query = "select video.VideoName, video.ViewCount , channel.ChannelName from video INNER JOIN channel ON video.ChannelID =channel.ChannelID Order By ViewCount DESC limit 10;"
