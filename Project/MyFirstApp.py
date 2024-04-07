@@ -60,7 +60,7 @@ else:
         query = "SELECT video.VideoName, channel.ChannelName FROM channel JOIN playlist ON channel.ChannelID= playlist.ChannelID JOIN video ON playlist.PlaylistID = video.PlaylistID where LikeCount = (select max(LikeCount) from video);"
         result = querySqlTables(query) 
     elif question == 'What is the total number of likes and dislikes for each video, and what are their corresponding video names?':
-        query = "SELECT VideoName, LikeCount, FavoriteCount FROM video ORDER BY LikeCount DESC, FavoriteCount DESC;"
+        query = "SELECT VideoName, LikeCount, DisLikeCount FROM video ORDER BY LikeCount DESC, DisLikeCount DESC;"
         result = querySqlTables(query) 
     elif question == 'What is the total number of views for each channel, and what are their corresponding channel names?':
         query = "SELECT ChannelName,ChannelViews FROM channel ORDER BY ChannelViews DESC;"
