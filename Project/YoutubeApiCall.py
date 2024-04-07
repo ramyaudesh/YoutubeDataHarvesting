@@ -12,39 +12,55 @@ youtube = googleapiclient.discovery.build(
 api_service_name, api_version, developerKey=credentials)
 
 
-    # Disable OAuthlib's HTTPS verification when running locally.
-    # *DO NOT* leave this option enabled in production.
-def channel_api_call(channelId):    
+def extractData(channelId):
+    
+    # 1.Extract channel data - and get playlist id
+    playlistId = channel_api_call(channelId)
+         
+    #2.Pass playlist id to playlist api
+    videosData = playlist_api_call(playlistId)
+
+    #3.Get videos and comments details 
+    for video in videosData:
+        videos_api_call(video,playlistId)
+        comments_api_call(video)
+     
+def channel_api_call(channelIdInput):    
         request = youtube.channels().list(
-            part="snippet,contentDetails,statistics",id=channelId
+            part="snippet,contentDetails,statistics",id=channelIdInput
         )
         channelResponse = request.execute()
         st.write(channelResponse)
-        ChannelData(channelResponse)
+        uploads = ChannelData(channelResponse)
+        return uploads
+        
+def playlist_api_call(playlistIdInput):
+        request = youtube.playlistItems().list(
+            part='snippet',
+            playlistId=playlistIdInput
+        )
+        response = request.execute()
+
+        st.write(response)
+        videosData = PlaylistData(response)
+        df=pd.DataFrame(videosData)
+        videoList = df["videoId"].values.tolist()
+        return videoList
          
-def videos_api_call(videoId):
+def videos_api_call(videoIdInput,playlistIdI):
         request = youtube.videos().list(
-            part="snippet,contentDetails,statistics",id=videoId
+            part='contentDetails,id,snippet,statistics,status',id=videoIdInput
         )
         response = request.execute()
 
         st.write(response)
-        ChannelData(response)
+        VideoData(response,playlistIdI)
         
-def playlist_api_call(playlistId):
-        request = youtube.playlists().list(
-            part="snippet,contentDetails,statistics",id=playlistId
+def comments_api_call(commentsIdInput):
+        request = youtube.commentThreads().list(
+            part="snippet",videoId=commentsIdInput
         )
         response = request.execute()
 
         st.write(response)
-        ChannelData(response)
-        
-def comments_api_call(commentsId):
-        request = youtube.comments().list(
-            part="snippet,contentDetails,statistics",id=commentsId
-        )
-        response = request.execute()
-
-        st.write(response)
-        ChannelData(response)
+        CommentsData(response)
