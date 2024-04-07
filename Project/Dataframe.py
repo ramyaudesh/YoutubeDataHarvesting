@@ -3,11 +3,15 @@ import streamlit as st
 from sqlalchemy import *
 from mysql import *
 
+engine = create_engine('mysql://ramya:root123@localhost/youtubeharvesting')
+
 def UploadDataToTable(data,table):
-    
-    engine = create_engine('mysql://ramya:root123@localhost/youtubeharvesting')
     data.to_sql(table, con=engine, if_exists='append', index=False)    
-    
+
+def querySqlTables(query):
+    result = pd.read_sql_query(query,engine)
+    return result
+  
 def ChannelData(FullChannelDetails):
     if FullChannelDetails!=0:
 
@@ -25,6 +29,7 @@ def ChannelData(FullChannelDetails):
         UploadDataToTable(StoredChannelData,"channel")
         
         # st.write("Extracted Uploads Url is------------>"+ Uploads)
+        st.toast('Hooray!! Channel data extracted and uploaded to database!!', icon='🎉')
         return Uploads
 
 def PlaylistData(FullPlaylistDetails):
@@ -56,6 +61,7 @@ def VideoData(FullVideoDetails,playlistIdI):
         for item in FullVideoDetails["items"]:
             requiredVideoDetails = dict(
                 VideoID = item["id"],
+                ChannelID = item["snippet"]["channelId"],
                 PlaylistID = playlistIdI,
                 VideoName = item["snippet"]["title"],
                 VideoDescription = item["snippet"]["description"],
