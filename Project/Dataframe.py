@@ -21,7 +21,7 @@ def ChannelData(FullChannelDetails):
             "CHANNELTYPE" : [FullChannelDetails["items"][0]["kind"]],
             "CHANNELVIEWS" : [FullChannelDetails["items"][0]["statistics"]["viewCount"]],
             "CHANNELDESCRIPTION" : [FullChannelDetails["items"][0]["snippet"]["description"]],
-            "CHANNELSTATUS" : [FullChannelDetails["items"][0]["snippet"]["title"]],      
+            "CHANNELSTATUS" : [FullChannelDetails["items"][0]["snippet"]["title"]]      
             })
 
         Uploads=  FullChannelDetails["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]

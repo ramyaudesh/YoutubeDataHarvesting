@@ -19,10 +19,10 @@ if selectionMenu == "Channels":
     channelId= st.text_input("Enter Channel ID Below")
 
     if 'clicked' not in st.session_state:
-        st.session_state.clicked = False
+        st.session_state.clicked = false
 
     def click_button():
-        st.session_state.clicked = True
+        st.session_state.clicked = true
         extractData(channelId)
     
     if st.session_state.clicked:
@@ -48,7 +48,7 @@ else:
         query = "SELECT video.VideoName, channel.ChannelName FROM video INNER JOIN channel ON video.ChannelID =channel.ChannelID;"
         result = querySqlTables(query) 
     elif question == 'Which channels have the most number of videos, and how many videos do they have?':
-        query = "select count(VideoID), channel.ChannelName from video INNER JOIN channel ON video.ChannelID=channel.ChannelID group by ChannelName order by count(VideoID) DESC;"
+        query = "select count(VideoID) as VideoCount, channel.ChannelName from video INNER JOIN channel ON video.ChannelID=channel.ChannelID group by ChannelName;"
         result = querySqlTables(query) 
     elif question == 'What are the top 10 most viewed videos and their respective channels?':
         query = "select video.VideoName, video.ViewCount , channel.ChannelName from video INNER JOIN channel ON video.ChannelID =channel.ChannelID Order By ViewCount DESC limit 10;"
@@ -88,7 +88,7 @@ else:
         if question == 'What are the names of all the videos and their corresponding channels?':
             st.bar_chart(chart_data,x="ChannelName",y="VideoName")
         elif question == 'Which channels have the most number of videos, and how many videos do they have?':
-            st.bar_chart(chart_data,x="ChannelName",y="VideoName")
+            st.bar_chart(chart_data,x="VideoCount",y="ChannelName")
         elif question == 'What are the top 10 most viewed videos and their respective channels?':
             st.bar_chart(chart_data,x="ChannelName",y="VideoName")
         elif question == 'How many comments were made on each video, and what are their corresponding video names?':
@@ -96,7 +96,7 @@ else:
         elif question == 'Which videos have the highest number of likes, and what are their corresponding channel names?':
             st.bar_chart(chart_data,x="ChannelName",y="VideoName")
         elif question == 'What is the total number of likes and dislikes for each video, and what are their corresponding video names?':
-            st.bar_chart(chart_data,x="VideoName",y=["LikeCount","FavoriteCount"])
+            st.bar_chart(chart_data,x="VideoName",y=["LikeCount","DisLikeCount"])
         elif question == 'What is the total number of views for each channel, and what are their corresponding channel names?':
             st.bar_chart(chart_data,x="ChannelName",y="ChannelViews")
         elif question == 'What are the names of all the channels that have published videos in the yea 2022?':
