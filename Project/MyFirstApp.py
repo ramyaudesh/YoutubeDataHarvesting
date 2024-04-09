@@ -69,7 +69,7 @@ else:
         query = "SELECT DISTINCT(ChannelName) FROM channel JOIN playlist ON channel.ChannelID= playlist.ChannelID JOIN video ON playlist.PlaylistID = video.PlaylistID WHERE EXTRACT(YEAR FROM video.PublishedDate) = 2022;"
         result = querySqlTables(query) 
     elif question == 'What is the average duration of all videos in each channel, and what are their corresponding channel names?':
-        query = "SELECT ChannelName, AVG(Duration) FROM channel JOIN playlist ON channel.ChannelID= playlist.ChannelID JOIN video ON playlist.PlaylistID = video.PlaylistID GROUP BY ChannelName order BY AVG(Duration) DESC;"
+        query = "SELECT ChannelName, AVG(Duration) as AverageDuration FROM channel JOIN playlist ON channel.ChannelID= playlist.ChannelID JOIN video ON playlist.PlaylistID = video.PlaylistID GROUP BY ChannelName order BY AVG(Duration) DESC;"
         result = querySqlTables(query) 
     elif question == 'Which videos have the highest number of comments, and what are their corresponding channel names?':
         query = "SELECT VideoName, ChannelName  FROM channel JOIN playlist ON channel.ChannelID = playlist.ChannelID JOIN video ON playlist.PlaylistID = video.PlaylistID where CommentCount = (select max(CommentCount) from video);"
@@ -102,7 +102,7 @@ else:
         elif question == 'What are the names of all the channels that have published videos in the yea 2022?':
             st.bar_chart(chart_data)
         elif question == 'What is the average duration of all videos in each channel, and what are their corresponding channel names?':
-            st.bar_chart(chart_data,x="ChannelName",y="AVG(Duration)")
+            st.bar_chart(chart_data,x="ChannelName",y="AverageDuration")
         elif question == 'Which videos have the highest number of comments, and what are their corresponding channel names?':
             st.bar_chart(chart_data,x="ChannelName",y="VideoName")
         else:
