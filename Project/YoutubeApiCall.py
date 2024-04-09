@@ -56,7 +56,7 @@ def videos_api_call(videoIdInput,playlistIdI):
     if videoIdInput!=0:
 
         request = youtube.videos().list(
-            part='contentDetails,id,snippet,statistics,status',id=videoIdInput,maxResults=10
+            part='contentDetails,id,snippet,statistics,status',id=videoIdInput,maxResults=50
         )
         response = request.execute()
 
@@ -66,7 +66,7 @@ def videos_api_call(videoIdInput,playlistIdI):
 def comments_api_call(commentsIdInput):
     if commentsIdInput!=0:
         request = youtube.commentThreads().list(
-            part="snippet",videoId=commentsIdInput,maxResults=10
+            part="snippet",videoId=commentsIdInput,maxResults=50
         )
         response = request.execute()
 

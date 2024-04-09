@@ -17,17 +17,15 @@ with st.sidebar:
 if selectionMenu == "Channels":
     st.title("YouTube Channels Harvesting")
     channelId= st.text_input("Enter Channel ID Below")
-
-    if 'clicked' not in st.session_state:
-        st.session_state.clicked = false
-
+    
     def click_button():
         st.session_state.clicked = true
         extractData(channelId)
+        
+    if 'clicked' not in st.session_state:
+        st.session_state.clicked = false
     
-    if st.session_state.clicked:
-    # The message and nested widget will remain on the page
-            
+    if st.session_state.clicked:           
      st.button(label='Extract Data', on_click=click_button)
      
 else:
